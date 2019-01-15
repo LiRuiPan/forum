@@ -1,0 +1,6 @@
+.idea
+data
+log.txt
+*.pyc
+secret.py
+__pycache__
