@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>注册界面</title>
+    <link rel="icon" href="/static/photos/favicon.png" type="image/x-icon">
+
+    <link href="/static/css/style_log.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/static/css/login_style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/userpanel.css">
+</head>
+<body class="login">
+<div class="login_m">
+    <div class="login_boder" style="position: relative; top: 120px">
+        <form class="form-horizontal" method="post" action="{{ url_for('.register', id=cap_id) }}">
+            <div class="login_padding" id="login_model">
+
+                <h2>用户名：</h2>
+                <label>
+                    <input type="text" id="username" class="txt_input txt_input2" name="username"
+                           placeholder="用户名应多于两个字符">
+                </label>
+                <h2>密码：</h2>
+                <label>
+                    <input type="password" name="password" id="userpwd" class="txt_input">
+                </label>
+                <h2>邮箱：</h2>
+                <label>
+                    <input type="text" name="email" class="txt_input" placeholder="用于找回密码，必填">
+                </label>
+                <h2>验证码：</h2>
+                <label>
+                    <input type="text" name="content" class="txt_input">
+                </label>
+                <label>
+                    <img src="{{ path }}" title="验证码" alt="验证码" style="position: relative; top: 12px">
+                    看不清？<a href="{{ url_for('.register_view') }}">换一张</a>
+                </label>
+                <br><br>
+                <div class="rem_sub">
+                    <label>
+                        <input type="submit" class="sub_button" name="button" id="button" value="注册"
+                                       style="opacity: 0.7; width: 70px; position: relative; top: -48px; left: -10px;">
+                    </label>
+                </div>
+            </div>
+        </form>
+        <div class="error" style="display: none">{{ result }}</div>
+    </div>
+</div>
+<br> <br>
+<p align="center"><a href="http://www.miitbeian.gov.cn">备案号XXXXXXXXXX</a></p>
+<script>
+    error = document.querySelector('.error')
+    if (error.innerText != ' ') {
+        alert(error.innerText)
+    }
+
+</script>
+</body>
+</html>
