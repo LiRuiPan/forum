@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="icon" href="/static/photos/favicon.png" type="image/x-icon">
+    {% block css %}
+    <link rel="stylesheet" href="/static/css/index.min.23a5b1ca.min.css" media="all">
+    {% endblock css %}
+</head>
+<body>
+<div class="page">
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+
+
+            <form id="search_form" class="navbar-search" method="post" >
+                <input type="text" id="q" name="content" class="search-query span3" placeholder="可输入用户名或帖子标题查找" value="">
+            </form>
+            <ul class="nav pull-right">
+                <li><a href="{{ url_for('index.index') }}">首页</a></li>
+                <li>
+                    <a >
+                        消息
+                    </a>
+                </li>
+                <li><a >源码</a></li>
+                <li><a >关于</a></li>
+                <li><a >设置</a></li>
+                <li>
+                    <a >退出</a>
+                </li>
+
+            </ul>
+            <a class="btn btn-navbar" id="responsive-sidebar-trigger">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+        </div>
+    </div>
+</div>
+<div id="main">
+    {% block right %}
+        <div id="sidebar">
+            <div class="panel">
+                <div class="inner">
+                    <a href="{{ url_for('index.index') }}" class="create_topic_btn">
+                        <span class="span-success">注册/登陆</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    {% endblock right %}
+    {% block content %}{% endblock content %}
+</div>
+</div>
+{% block script %}{% endblock script %}
+
+<div class="footer">
+
+    <div class="col_fade" style="text-align: center">
+        <p><a href="http://www.miitbeian.gov.cn" >备案号：XXXXXXXX</a></p>
+    </div>
+
+</div>
+</body>
+
+</html>

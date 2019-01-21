@@ -1,0 +1,50 @@
+
+#zh-pm-item-wrap .zm-item {
+    min-height: 55px
+}
+
+#zh-pm-detail-item-wrap {
+    border-top: solid 1px #ccc
+}
+
+.zm-pm-item {
+    padding: 12px 0;
+    min-height: 50px
+}
+
+html.no-touchevents .zm-pm-item:hover .zu-autohide {
+    display: inline-block
+}
+
+.zm-pm-item + .zm-pm-item {
+    border-top: 1px solid #eee
+}
+
+.zm-pm-item-main {
+    position: relative;
+    margin: 0 0 5px 62px
+}
+
+.zm-pm-item-meta {
+    text-align: right
+}
+
+.zm-pm-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+
+
+.zu-pm-item-meta {
+    text-align: right
+}
+
+.zu-pm-item-meta .report-menu {
+    text-align: left
+}
+
+.zm-pm-item .zm-item-meta, .zm-pm-item .zu-pm-item-meta {
+    margin: 0 0 0 63px
+}
