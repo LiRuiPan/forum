@@ -39,6 +39,7 @@ def generate_fake_date():
     form = dict(
         username='gua',
         password='123',
+        image='/static/photos/head/default.jpg',
         email=secret.test_mail,
     )
     User.register(form)

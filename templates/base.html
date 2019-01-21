@@ -20,7 +20,7 @@
                 <input type="text" id="q" name="content" class="search-query span3" placeholder="可输入用户名或帖子标题查找" value="">
             </form>
             <ul class="nav pull-right">
-                <li><a href="{{ url_for('index.index') }}">首页</a></li>
+                <li><a href="{{ url_for('topic.index') }}">首页</a></li>
                 <li>
                     <a >
                         消息
@@ -45,6 +45,41 @@
 <div id="main">
     {% block right %}
         <div id="sidebar">
+            {% if user %}
+            <div class="panel">
+                <div class="header">
+                    <span class="col_fade">个人信息</span>
+                </div>
+                <div class="inner">
+                    <div class="user_card">
+                        <div>
+                            <a class="user_avatar" href="{{ url_for('index.profile') }}">
+                                <img src="{{ user.image }}" title="{{ user.username }}" alt="{{ user.username }}">
+                            </a>
+                            <span class="user_name">
+                                <a class="dark" href="{{ url_for('index.profile') }}">{{ user.username }}</a>
+                            </span>
+
+                            <div class="board clearfix">
+                                <div class="floor">
+                                </div>
+                            </div>
+                            <div class="space clearfix"></div>
+                            <span class="signature">{{ user.signature }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="inner">
+                    {% block apply %}
+                    <a href="" class="create_topic_btn">
+                        <span class="span-success">发布话题</span>
+                    </a>
+                    {% endblock apply%}
+                </div>
+            </div>
+            {% else %}
             <div class="panel">
                 <div class="inner">
                     <a href="{{ url_for('index.index') }}" class="create_topic_btn">
@@ -52,7 +87,7 @@
                     </a>
                 </div>
             </div>
-
+            {% endif %}
         </div>
     {% endblock right %}
     {% block content %}{% endblock content %}

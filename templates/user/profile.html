@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block title %}个人主页{% endblock title %}
+{% block apply %}
+{% if current == user.id %}
+    {{ super() }}
+{% else %}
+        <a href="" class="create_topic_btn">
+            <span class="span-success">发私信</span>
+        </a>
+{% endif %}
+{% endblock apply%}
+{% block content %}
+ <div id="content">
+        <div class="panel">
+            <div class="header">
+                <ul class="breadcrumb">
+                    <li><a href="{{ url_for('topic.index') }}">主页</a><span class="divider">/</span></li>
+                    <li class="active">个人主页</li>
+                </ul>
+            </div>
+            <div class="inner userinfo">
+                <div class="user_big_avatar">
+                    <img src="{{ user.image }}" class="user_avatar" title="{{ user.username }}"
+                         alt="{{ user.username }}">
+                </div>
+                <a class="dark">{{ user.username }}</a>
+
+                <div class="user_profile">
+                    <ul class="unstyled">
+                    </ul>
+                </div>
+                <p class="col_fade gua-register-time" data-created_time="{{ user.created_time }}"></p>
+
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">最近创建的话题</span>
+            </div>
+                <div class="inner">
+                  <p>无话题</p>
+                </div>
+        </div>
+        <div class="error" style="display: none">{{ result }}</div>
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">最近参与的话题</span>
+            </div>
+
+                <div class="inner">
+                    <p>无话题</p>
+                </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block script %}
+<script>
+    var e = function (sel) {
+        return document.querySelector(sel)
+    }
+
+    var es = function (sel) {
+        return document.querySelectorAll(sel)
+    }
+    
+    var ft = function (time) {
+        var m = Math.floor(time / 60)
+        var h = Math.floor(m / 60)
+        var d = Math.floor(h / 24)
+        var y = Math.floor(d / 365)
+        if (y > 0) {
+            var s = `${y}年前`
+            return s
+        }else if (d > 0) {
+            var s = `${d}天前`
+            return s
+        } else if (h > 0) {
+            var s = `${h}小时前`
+            return s
+        } else if (m > 0) {
+            var s = `${m}分钟前`
+            return s
+        } else {
+            var s = `${time}秒前`
+            return s
+        }
+    }
+
+    var ct = function () {
+        var t = e('.gua-register-time')
+        var time = Number(t.dataset.created_time)
+        var now = Math.floor(new Date() / 1000)
+        var delta = now - time
+        t.innerText = '注册时间 ' + ft(delta)
+    }
+
+    var registerTimer = function () {
+        setInterval(function () {
+            var times = es('.gua-time')
+            for (var i = 0; i < times.length; i++) {
+                var t = times[i]
+                var time = Number(t.dataset.created_time)
+                var now = Math.floor(new Date() / 1000)
+                var delta = now - time
+                t.innerText = ft(delta)
+            }
+        }, 1000)
+    }
+
+    var error = function () {
+        error = document.querySelector('.error')
+        if (error.innerText != ' ') {
+            alert(error.innerText)
+        }
+    }
+
+    var __main = function () {
+        ct()
+        registerTimer()
+        error()
+    }
+
+    __main()
+
+</script>
+{% endblock script %}

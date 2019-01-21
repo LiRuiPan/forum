@@ -89,6 +89,31 @@ def logout():
     return redirect(url_for('index.index'))
 
 
+# 当前用户主页
+@main.route('/profile')
+@login_required
+def profile():
+    result = request.args.get('result', ' ')
+    u = current_user()
+    return render_template('user/profile.html', user=u, current=u.id, result=result)
+
+
+@main.route('/user')
+def user_detail():
+    user_id = request.args['id']
+    u = User.find(user_id)
+    if u is None:
+        abort(404)
+    else:
+        result = request.args.get('result', ' ')
+        c = current_user()
+        if c is None:
+            current_user_id = -1
+        else:
+            current_user_id = c.id
+        return render_template('user/profile.html', user=u, current=current_user_id, result=result)
+    
+
 @main.route('/images/<filename>')
 def image(filename):
     return send_from_directory('images', filename)
