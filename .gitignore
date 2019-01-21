@@ -1,6 +1,7 @@
 *.idea
 css
 photos
+images
 log.txt
 *.pyc
 secret.py

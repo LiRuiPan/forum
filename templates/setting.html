@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block title %}个人设置{% endblock title %}
+{% block content %}
+    <div id="content">
+        <div class="panel">
+            <div class="header">
+                <ul class="breadcrumb">
+                    <li><a href="{{ url_for('topic.index') }}">主页</a><span class="divider">/</span></li>
+                    <li class="active">设置</li>
+                </ul>
+            </div>
+            <div class="inner">
+                <form id="setting_form" class="form-horizontal"
+                      action="{{ url_for('user.edit', id=user.id, token=token) }}" method="post">
+                    <div class="control-group">
+                        <label class="control-label" for="name">用户名：</label>
+
+                        <div class="controls">
+                            <input class="input-xlarge readonly" id="name" name="username" size="30" type="text"
+                                   value="{{ user.username }}">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="email">邮箱：</label>
+
+                        <div class="controls">
+                            <input class="input-xlarge readonly" id="email" name="email" size="30" type="text"
+                                   value="{{ user.email }}">
+
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="signature">个性签名：</label>
+
+                        <div class="controls">
+                            <textarea class="input-xlarge" id="signature" name="signature" size="30" >{{ user.signature }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="message">接受私信：</label>
+
+                        <select style="position: relative; left: 20px; width: 50px;" name="receive_message" required>
+                                <option value="True">是</option>
+                                <option value="False">否</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <input type="submit" class="span-primary submit_btn" data-loading-text="保存中.." value="保存设置">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">更改密码：</span>
+            </div>
+            <div class="inner">
+                <form id="change_pass_form" class="form-horizontal"
+                      action="{{ url_for('user.change', id=user.id, username=user.username, token=token) }}"
+                      method="post">
+                    <div class="control-group">
+                        <label class="control-label" for="old_pass">当前密码：</label>
+
+                        <div class="controls">
+                            <input class="input-xlarge" type="password" id="old_pass" name="old_pass" size="30">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="new_pass">新密码：</label>
+
+                        <div class="controls">
+                            <input class="input-xlarge" type="password" id="new_pass" name="new_pass" size="30">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <input type="submit" class="span-primary submit_btn" data-loading-text="更改中.." value="更改密码">
+                    </div>
+                </form>
+                <div class="error" style="display: none">{{ result }}</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">上传头像</span>
+            </div>
+            <div class="inner">
+                <form id="change_pass_form" class="form-horizontal"
+                      action="{{ url_for('user.avatar_add', id=user.id, token=token)}}"
+                      enctype="multipart/form-data"
+                      method="post">
+                    <div class="control-group">
+
+                        <div class="controls">
+                            <input class="input-xlarge" type="file" name="avatar" size="30">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <input type="submit" class="span-primary submit_btn" data-loading-text="更改中.." value="上传头像">
+                    </div>
+                </form>
+                <div class="error" style="display: none">{{ result }}</div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block script %}
+    <script>
+        error = document.querySelector('.error')
+        if (error.innerText != ' ') {
+            alert(error.innerText)
+        }
+    </script>
+{% endblock script %}

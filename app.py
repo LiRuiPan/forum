@@ -6,7 +6,7 @@ from models.base_model import db
 
 from routes.index import main as index_routes
 from routes.topic import main as topic_routes
-
+from routes.user import main as user_routes
 from routes.index import not_found
 
 
@@ -26,6 +26,7 @@ def format_time(unix_timestamp):
 def register_routes(app):
     app.register_blueprint(index_routes)
     app.register_blueprint(topic_routes, url_prefix='/topic')
+    app.register_blueprint(user_routes, url_prefix='/user')
     app.errorhandler(404)(not_found)
     app.template_filter()(count)
     app.template_filter()(format_time)

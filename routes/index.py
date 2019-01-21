@@ -82,13 +82,6 @@ def login(id):
             return redirect(url_for('.index', result=r))
 
 
-@main.route('/logout')
-@login_required
-def logout():
-    session.pop('user_id')
-    return redirect(url_for('index.index'))
-
-
 # 当前用户主页
 @main.route('/profile')
 @login_required
@@ -112,7 +105,7 @@ def user_detail():
         else:
             current_user_id = c.id
         return render_template('user/profile.html', user=u, current=current_user_id, result=result)
-    
+
 
 @main.route('/images/<filename>')
 def image(filename):
