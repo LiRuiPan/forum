@@ -64,3 +64,23 @@ def new_csrf_token(*user_id):
     token = str(uuid.uuid4())
     cache.set(token, user_id)
     return token
+
+
+def admin_required(route_function):
+    @functools.wraps(route_function)
+    def f():
+        log('admin_required')
+        u = current_user()
+        if u is None:
+            log('游客用户')
+            r = '请登录'
+            return redirect(url_for('index.index', result=r))
+        elif u.role == 'admin':
+            log('admin用户', route_function)
+            return route_function()
+        else:
+            log('越权访问', route_function)
+            r = '无权访问'
+            return redirect(url_for('index.profile', result=r))
+
+    return f

@@ -8,7 +8,12 @@
                    class="topic-tab current-tab">
                     全部帖子
                 </a>
-
+                {% for b in bs %}
+                    <a href="{{ url_for('topic.index', board_id=b.id) }}"
+                       class="topic-tab ">
+                        {{ b.title }}
+                    </a>
+                {% endfor %}
             </div>
             <div class="inner post">
             </div>

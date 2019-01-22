@@ -6,11 +6,12 @@ from flask import (
     Blueprint,
 )
 from routes.helper import current_user
-
+from models.board import Board
 main = Blueprint('topic', __name__)
 
 
 @main.route("/")
 def index():
     u = current_user()
-    return render_template("topic/index.html", user=u)
+    bs = Board.all()
+    return render_template("topic/index.html", user=u, bs=bs)

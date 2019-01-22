@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}后台管理界面{% endblock title %}
+{% block content %}
+    <div id="content">
+        <div class="panel">
+            <div class="header">
+                <ul class="breadcrumb">
+                    <li><a href="{{ url_for('topic.index') }}">主页</a><span class="divider">/</span></li>
+                    <li class="active">后台管理</li>
+                </ul>
+            </div>
+            <div class="inner">
+                <form id="setting_form" class="form-horizontal"
+                      action="{{ url_for('admin.add_board', token=token) }}" method="post">
+                    <div class="control-group">
+                        <label class="control-label" for="name">所要添加版块名称：</label>
+
+                        <div class="controls">
+                            <input class="input-xlarge readonly" id="name" name="title" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <input type="submit" class="span-primary submit_btn" data-loading-text="添加中.." value="添加">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
