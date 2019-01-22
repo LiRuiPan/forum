@@ -10,6 +10,7 @@ from flask import (
 )
 from models.captcha import Captcha
 from models.user import User
+from models.topic import Topic
 from routes.helper import current_user, login_required, new_csrf_token
 
 main = Blueprint('index', __name__)
@@ -114,6 +115,20 @@ def user_detail():
 def about():
     u = current_user()
     return render_template('about.html', user=u)
+
+
+@main.route('/search', methods=['POST'])
+def search():
+    content = request.form['content']
+    u = User.one(username=content)
+    if u is not None:
+        return redirect(url_for('.user_detail', id=u.id))
+    else:
+        t = Topic.one(title=content)
+        if t is not None:
+            return redirect(url_for('topic.detail', id=t.id))
+        else:
+            return not_found(t)
 
 
 @main.route('/images/<filename>')

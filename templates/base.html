@@ -16,7 +16,7 @@
         <div class="container">
 
 
-            <form id="search_form" class="navbar-search" method="post" >
+            <form id="search_form" class="navbar-search" method="post" action="{{ url_for('index.search') }}">
                 <input type="text" id="q" name="content" class="search-query span3" placeholder="可输入用户名或帖子标题查找" value="">
             </form>
             <ul class="nav pull-right">
