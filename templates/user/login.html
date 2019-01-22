@@ -36,7 +36,7 @@
                 <span class="forgot" style="position: relative; top: 6px;">没有账户?<a
                         href="{{ url_for('.register_view') }}">点此注册</a></span>
                 <span class="forgot" style="position: relative; left:90px; top: 6px;">
-                    忘记密码?<a id="iforget" >点此找回</a></span>
+                    忘记密码?<a id="iforget" href="{{ url_for('.find_view') }}">点此找回</a></span>
                 <br><br>
                 <span><a href="{{ url_for('topic.index') }}">以游客身份进入</a></span>
                 <div class="rem_sub">

@@ -1,10 +1,11 @@
 from flask import Flask
 import time
 import secret
+import config
 from utils import log
 from models.base_model import db
 
-from routes.index import main as index_routes
+from routes.index import main as index_routes, mail
 from routes.topic import main as topic_routes
 from routes.reply import main as reply_routes
 from routes.user import main as user_routes
@@ -52,6 +53,15 @@ def configured_app():
         secret.database_password
     )
     db.init_app(app)
+
+    # 配置邮件服务
+    app.config['MAIL_SERVER'] = 'smtp.exmail.qq.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USE_SSL'] = True
+    app.config['MAIL_USERNAME'] = config.admin_mail
+    app.config['MAIL_PASSWORD'] = secret.mail_password
+
+    mail.init_app(app)
 
     register_routes(app)
 
