@@ -24,7 +24,7 @@
                                     <a class="topic_title" href="{{ url_for('topic.detail', id=t.id) }}">
                                         {{ t.title }}
                                     </a>
-                                    <span style="position: relative; left:20px">回复/ {{ t.views }} 浏览</span>
+                                    <span style="position: relative; left:20px">{{ t.replies() | count }} 回复/ {{ t.views }} 浏览</span>
                                 </div>
                             </div>
                         {% endfor %}

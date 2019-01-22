@@ -2,6 +2,7 @@ from sqlalchemy import Integer, Column, UnicodeText, Unicode
 
 from models.base_model import SQLMixin, db
 import models.user
+import models.reply
 from models.board import Board
 
 
@@ -32,3 +33,7 @@ class Topic(SQLMixin, db.Model):
     def board(self):
         b = Board.one(id=self.board_id).title
         return b
+
+    def replies(self):
+        rs = models.reply.Reply.all(topic_id=self.id)
+        return rs

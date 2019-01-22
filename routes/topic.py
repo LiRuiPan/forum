@@ -7,6 +7,7 @@ from flask import (
 )
 from routes.helper import current_user, login_required, new_csrf_token, csrf_required
 from models.board import Board
+from models.reply import Reply
 from models.topic import Topic
 
 main = Blueprint('topic', __name__)
@@ -29,8 +30,9 @@ def detail():
     result = request.args.get('result', ' ')
     topic_id = request.args['id']
     m = Topic.get(topic_id)
+    rs = Reply.all(topic_id=topic_id)
     token = new_csrf_token()
-    return render_template("topic/detail.html", topic=m, token=token, result=result)
+    return render_template("topic/detail.html", topic=m, replies=rs, token=token, result=result)
 
 
 @main.route("/add", methods=["POST"])
@@ -57,5 +59,6 @@ def new():
 def delete():
     topic_id = request.args['id']
     Topic.delete(id=topic_id)
+    Reply.delete(topic_id=topic_id)
     r = '删除成功'
     return redirect(url_for('index.profile', result=r))

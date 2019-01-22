@@ -46,7 +46,7 @@
                     </a>
                     <span class="reply_count pull-left">
                         <span class="count_of_replies" title="回复数">
-
+                        {{ t.replies() | count }}
                         </span>
                         <span class="count_seperator">/</span>
                         <span class="count_of_visits" title="点击数">
@@ -77,10 +77,38 @@
             <div class="header">
                 <span class="col_fade">最近参与的话题</span>
             </div>
+            {% if user.replies() %}
+            {% for r in user.replies() | sort %}
+                <div class="cell">
+                    <a class="user_avatar pull-left" href="{{ url_for('index.user_detail', id=r.topic().user().id) }}">
+                        <img src="{{ r.topic().user().image }}" title="{{ r.topic().user().username }}">
+                    </a>
+                    <span class="reply_count pull-left">
+                        <span class="count_of_replies" title="回复数">
+                            {{ r.topic().replies() | count }}
+                        </span>
+                        <span class="count_seperator">/</span>
+                        <span class="count_of_visits" title="点击数">
+                            {{ r.topic().views }}
+                        </span>
+                    </span>
+                    <a class="last_time pull-right" href="{{ url_for('topic.detail', id=r.topic_id) }}">
+                        <img class="user_small_avatar" src="{{ user.image }}">
+                        <span class="last_active_time gua-time" data-created_time="{{ r.created_time }}"></span>
+                    </a>
+                    <div class="topic_title_wrapper">
+                        <a class="topic_title" href="{{ url_for('topic.detail', id=r.topic_id) }}"
+                           title="{{ r.topic().title }}">
+                            {{ r.topic().title }}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
                 <div class="inner">
                     <p>无话题</p>
                 </div>
-
+            {% endif %}
         </div>
     </div>
 {% endblock content %}

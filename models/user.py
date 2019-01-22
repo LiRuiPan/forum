@@ -2,6 +2,7 @@ from sqlalchemy import Column, String, Unicode, Enum, Boolean
 
 from models.base_model import SQLMixin, db
 import models.topic
+import models.reply
 
 
 class User(SQLMixin, db.Model):
@@ -61,3 +62,7 @@ class User(SQLMixin, db.Model):
     def topics(self):
         ts = models.topic.Topic.all(user_id=self.id)
         return ts
+
+    def replies(self):
+        rs = models.reply.Reply.all(user_id=self.id)
+        return rs
