@@ -4,7 +4,7 @@
 {% if current == user.id %}
     {{ super() }}
 {% else %}
-        <a href="" class="create_topic_btn">
+        <a href="{{ url_for('mail.write', id=user.id) }}" class="create_topic_btn">
             <span class="span-success">发私信</span>
         </a>
 {% endif %}

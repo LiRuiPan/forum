@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block title %}私信主页{% endblock title %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/css/z.3e5da9dd.css">
+    <link rel="stylesheet" href="/static/css/main.1e966360.css">
+{% endblock css %}
+{% block apply %}
+    {{ super() }}
+    <div>
+        <div>
+            担心骚扰？可以 <a href="{{ url_for('user.setting') }}">设置</a> 为「不接受私信」。
+        </div>
+    </div>
+{% endblock apply %}
+{% block content %}
+    <div id="content">
+        <div class="panel">
+            <div class="header">
+                <ul class="breadcrumb">
+                    <li><a href="{{ url_for('topic.index') }}">主页</a><span class="divider">/</span></li>
+                    <li class="active">未读消息</li>
+                </ul>
+            </div>
+            {% if unread %}
+                {% for r in unread | sort %}
+                    <div class="cell zm-pm-item">
+                        <a class="zm-item-link-avatar50" href="{{ url_for('index.user_detail', id=r.sender().id) }}">
+                            <img class="zm-item-img-avatar50"
+                                 src="{{ r.sender().image }}">
+                        </a>
+                        <div class="zm-pm-item-main">
+                            <a id="pmto-0197007100" class="pm-touser author-link" title="{{ r.sender().username }}"
+                               href="{{ url_for('index.user_detail', id=r.sender().id) }}">{{ r.sender().username }}:</a>
+                            {{ r.content }}
+                        </div>
+                        <div class="zg-gray zu-pm-item-meta">
+                            <span class="zg-gray zg-left">{{ r.created_time | format_time }}</span>
+                            <a class="zg-link-litblue" href="{{ url_for('mail.reply', receiver_id=r.sender().id, message_id=r.id) }}"
+                               name="reply">回复</a>
+
+
+                            <span class="zg-bull">|</span>
+                            <a class="zg-link-litblue" href="{{ url_for('mail.read', id=r.id, token=token) }}" name="read">已读</a>
+
+
+                            <span class="zg-bull">|</span>
+                            <a class="zg-link-litblue" href="{{ url_for('mail.delete', id=r.id, token=token) }}"
+                               name="delete">删除</a>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="inner">
+                    <p>无消息</p>
+                </div>
+            {% endif %}
+
+        </div>
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">已读消息</span>
+            </div>
+
+            {% if read %}
+                {% for r in read | sort %}
+                    <div class="cell zm-pm-item" data-name="{{ r.sender().username }}">
+                        <a class="zm-item-link-avatar50" href="{{ url_for('index.user_detail', id=r.sender().id) }}">
+                            <img class="zm-item-img-avatar50"
+                                 src="{{ r.sender().image }}">
+                        </a>
+                        <div class="zm-pm-item-main">
+                            <a id="pmto-0197007100" class="pm-touser author-link" title="{{ r.sender().username }}"
+                               href="{{ url_for('index.user_detail', id=r.sender().id) }}">{{ r.sender().username }}:</a>
+                            {{ r.content }}
+                        </div>
+                        <div class="zg-gray zu-pm-item-meta">
+                            <span class="zg-gray zg-left">{{ r.created_time | format_time }}</span>
+
+                            <a class="zg-link-litblue" href="{{ url_for('mail.write', id=r.sender().id) }}"
+                               name="reply">回复</a>
+
+                            <span class="zg-bull">|</span>
+                            <a class="zg-link-litblue" href="{{ url_for('mail.delete', id=r.id, token=token) }}"
+                               name="delete">删除</a>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="inner">
+                    <p>无消息</p>
+                </div>
+            {% endif %}
+
+        </div>
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">已发送消息</span>
+            </div>
+
+            {% if sends %}
+                {% for r in sends | sort %}
+                    <div class="cell zm-pm-item" data-name="{{ r.receiver().username }}">
+                        <a class="zm-item-link-avatar50" href="{{ url_for('index.user_detail', id=r.receiver().id) }}">
+                            <img class="zm-item-img-avatar50"
+                                 src="{{ r.receiver().image }}">
+                        </a>
+                        <div class="zm-pm-item-main">
+                            <a id="pmto-0197007100" class="pm-touser author-link" title="{{ r.receiver().username }}"
+                               href="{{ url_for('index.user_detail', id=r.receiver().id) }}">{{ r.receiver().username }}:</a>
+                            {{ r.content }}
+                        </div>
+                        <div class="zg-gray zu-pm-item-meta">
+                            <span class="zg-gray zg-left">{{ r.created_time | format_time }}</span>
+                            <a class="zg-link-litblue" href="{{ url_for('mail.delete', id=r.id, token=token) }}"
+                               name="delete">删除</a>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="inner">
+                    <p>无消息</p>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock content %}
