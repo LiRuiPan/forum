@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}关于{% endblock title %}
+{% block content %}
+    <div id="content">
+        <div class="panel">
+            <div class="header">
+                <ul class="breadcrumb">
+                    <li><a href="{{ url_for('topic.index') }}">主页</a><span class="divider">/</span></li>
+                    <li class="active">关于</li>
+                </ul>
+            </div>
+            <div class="inner topic">
+                <div class="topic_content">
+                    <div class="markdown-text"><h3>关于</h3>
+                        <p>本网站为个人练习所作，仅供个人学习内容分享。</p>
+
+                        <p>本网站目前由 <a target="_blank">@XXX</a> 维护，有问题请联系。</p>
+
+                        <p>本网站样式参考<a href="https://cnodejs.org/" target="_blank">CNode社区</a>，特此感谢。</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

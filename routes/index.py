@@ -107,6 +107,12 @@ def user_detail():
         return render_template('user/profile.html', user=u, current=current_user_id, result=result)
 
 
+@main.route('/about')
+def about():
+    u = current_user()
+    return render_template('about.html', user=u)
+
+
 @main.route('/images/<filename>')
 def image(filename):
     return send_from_directory('images', filename)
