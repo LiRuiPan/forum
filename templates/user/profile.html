@@ -29,7 +29,7 @@
                     <ul class="unstyled">
                     </ul>
                 </div>
-                <p class="col_fade gua-register-time" data-created_time="{{ user.created_time }}"></p>
+                <p class="col_fade register-time" data-created_time="{{ user.created_time }}"></p>
 
             </div>
         </div>
@@ -38,19 +38,49 @@
             <div class="header">
                 <span class="col_fade">最近创建的话题</span>
             </div>
+            {% if user.topics() %}
+            {% for t in user.topics() | sort %}
+                <div class="cell">
+                    <a class="user_avatar pull-left" href="{{ url_for('index.profile') }}">
+                        <img src="{{ user.image }}" title="{{ user.username }}">
+                    </a>
+                    <span class="reply_count pull-left">
+                        <span class="count_of_replies" title="回复数">
+
+                        </span>
+                        <span class="count_seperator">/</span>
+                        <span class="count_of_visits" title="点击数">
+                        {{ t.views }}
+                        </span>
+                    </span>
+                    <span class="last_time pull-right">
+                        <span class="last_active_time g-time" data-created_time="{{ t.created_time }}"></span>
+                    </span>
+                    <div class="topic_title_wrapper">
+                        <a class="topic_title" href="{{ url_for('topic.detail', id=t.id) }}" title="{{ t.title }}">
+                            {{ t.title }}
+                        </a>
+                        {% if current == user.id %}
+                        <a style="position:relative; left:22px;" href="{{ url_for('topic.delete', id=t.id, token=token) }}">删除</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
                 <div class="inner">
                   <p>无话题</p>
                 </div>
+            {% endif %}
         </div>
         <div class="error" style="display: none">{{ result }}</div>
         <div class="panel">
             <div class="header">
                 <span class="col_fade">最近参与的话题</span>
             </div>
-
                 <div class="inner">
                     <p>无话题</p>
                 </div>
+
         </div>
     </div>
 {% endblock content %}
@@ -88,7 +118,7 @@
     }
 
     var ct = function () {
-        var t = e('.gua-register-time')
+        var t = e('.register-time')
         var time = Number(t.dataset.created_time)
         var now = Math.floor(new Date() / 1000)
         var delta = now - time
@@ -97,7 +127,7 @@
 
     var registerTimer = function () {
         setInterval(function () {
-            var times = es('.gua-time')
+            var times = es('.g-time')
             for (var i = 0; i < times.length; i++) {
                 var t = times[i]
                 var time = Number(t.dataset.created_time)

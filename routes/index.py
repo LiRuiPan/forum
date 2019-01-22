@@ -10,7 +10,7 @@ from flask import (
 )
 from models.captcha import Captcha
 from models.user import User
-from routes.helper import current_user, login_required
+from routes.helper import current_user, login_required, new_csrf_token
 
 main = Blueprint('index', __name__)
 
@@ -20,6 +20,7 @@ main = Blueprint('index', __name__)
     访问首页
     注册
     登陆
+    查看个人主页
 """
 
 
@@ -88,7 +89,8 @@ def login(id):
 def profile():
     result = request.args.get('result', ' ')
     u = current_user()
-    return render_template('user/profile.html', user=u, current=u.id, result=result)
+    token = new_csrf_token()
+    return render_template('user/profile.html', user=u, current=u.id, token=token, result=result)
 
 
 @main.route('/user')
@@ -104,7 +106,8 @@ def user_detail():
             current_user_id = -1
         else:
             current_user_id = c.id
-        return render_template('user/profile.html', user=u, current=current_user_id, result=result)
+        token = new_csrf_token()
+        return render_template('user/profile.html', user=u, current=current_user_id, token=token, result=result)
 
 
 @main.route('/about')

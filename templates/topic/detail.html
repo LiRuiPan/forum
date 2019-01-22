@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}帖子详情{% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="//cdn.bootcss.com/prism/1.8.0/themes/prism.css" rel="stylesheet">
+{% endblock css %}
+{% block right %}
+{% endblock right %}
+{% block content %}
+    <div id="content">
+        <div class='panel'>
+            <div class='header topic_header'>
+                <span class="topic_full_title">{{ topic.title }}</span>
+                <div class="changes">
+                    <span>
+                        发布于 {{ topic.created_time | format_time }}
+                    </span>
+                    <span>
+                        <a href="{{ url_for('index.user_detail', id=topic.user_id) }}">作者 {{ topic.user().username }}</a>
+        	        </span>
+                    <span>
+          	            {{ topic.views }} 次浏览
+        	        </span>
+                    <span>
+                        来自 {{ topic.board() }}
+                    </span>
+                </div>
+            </div>
+
+            <div class='inner topic'>
+                <div class='topic_content'>
+                    <div class="markdown-text">{{ topic.content }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="error" style="display: none">{{ result }}</div>
+{% endblock content %}
+{% block script %}
+<script src="https://cdn.bootcss.com/marked/0.3.19/marked.min.js"></script>
+<script src="https://cdn.bootcss.com/prism/1.13.0/prism.js"></script>
+<script src="https://cdn.bootcss.com/prism/1.13.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script>
+    var e = function (sel) {
+        return document.querySelector(sel)
+    }
+
+    var es = function (sel) {
+        return document.querySelectorAll(sel)
+    }
+
+    var ft = function (time) {
+        var m = Math.floor(time / 60);
+        var h = Math.floor(m / 60);
+        var d = Math.floor(h / 24);
+        var y = Math.floor(d / 365);
+        if (y > 0) {
+            var s = `${y}年前`
+            return s
+        }else if (d > 0) {
+            var s = `${d}天前`
+            return s
+        } else if (h > 0) {
+            var s = `${h}小时前`
+            return s
+        } else if (m > 0) {
+            var s = `${m}分钟前`
+            return s
+        } else {
+            var s = `${time}秒前`
+            return s
+        }
+    }
+
+    var error = function () {
+        error = document.querySelector('.error')
+        if (error.innerText != ' ') {
+            alert(error.innerText)
+        }
+    }
+
+    var markContents = function () {
+        var contentDivs = es('.markdown-text')
+        for (var i = 0; i < contentDivs.length; i++) {
+            var contentDiv = contentDivs[i]
+            console.log('pre marked', contentDiv.textContent, contentDiv.innerHTML)
+            var content = marked(contentDiv.textContent)
+            console.log('after marked', content)
+            contentDiv.innerHTML = content
+        }
+    }
+
+    var highlight = function () {
+        Prism.plugins.autoloader.languages_path = 'https://cdn.bootcss.com/prism/1.13.0/components/'
+    }
+
+    var registerTimer = function () {
+        setInterval(function () {
+            var times = es('.g-time')
+            for (var i = 0; i < times.length; i++) {
+                var t = times[i]
+                var time = Number(t.dataset.created_time)
+                var now = Math.floor(new Date() / 1000)
+                var delta = now - time
+                t.innerText = ft(delta)
+            }
+        }, 1000)
+    }
+
+    var __main = function () {
+        error()
+        markContents()
+        highlight()
+        registerTimer()
+    }
+
+    __main()
+
+</script>
+{% endblock script %}

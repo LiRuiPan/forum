@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, Unicode, Enum, Boolean
 
 from models.base_model import SQLMixin, db
+import models.topic
 
 
 class User(SQLMixin, db.Model):
@@ -56,3 +57,7 @@ class User(SQLMixin, db.Model):
     def find(cls, user_id):
         u = User.one(id=user_id)
         return u
+
+    def topics(self):
+        ts = models.topic.Topic.all(user_id=self.id)
+        return ts

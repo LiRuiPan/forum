@@ -3,6 +3,7 @@ import secret
 from app import configured_app
 from models.base_model import db
 from models.user import User
+from models.board import Board
 import os
 import shutil
 
@@ -43,6 +44,9 @@ def generate_fake_date():
         email=secret.test_mail,
     )
     User.register(form)
+    boards = ['技术讨论', '个人随笔', '学习分享']
+    for b in boards:
+        Board.new(dict(title=b))
 
 
 if __name__ == '__main__':

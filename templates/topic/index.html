@@ -16,6 +16,24 @@
                 {% endfor %}
             </div>
             <div class="inner post">
+                <div class="topic_list">
+                    {% if ms %}
+                        {% for t in ms %}
+                            <div class="cell">
+                                <div class="topic_title_wrapper">
+                                    <a class="topic_title" href="{{ url_for('topic.detail', id=t.id) }}">
+                                        {{ t.title }}
+                                    </a>
+                                    <span style="position: relative; left:20px">回复/ {{ t.views }} 浏览</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="cell">
+                            <div class="topic_title_wrapper">还没有人发帖</div>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

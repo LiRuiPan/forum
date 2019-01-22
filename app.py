@@ -11,6 +11,10 @@ from routes.admin import main as admin_routes
 from routes.index import not_found
 
 
+def sort(cs):
+    return sorted(cs, key=lambda c: c.created_time, reverse=True)
+
+
 def count(input):
     log('count using jinja filter')
     return len(input)
@@ -30,6 +34,7 @@ def register_routes(app):
     app.register_blueprint(user_routes, url_prefix='/user')
     app.register_blueprint(admin_routes, url_prefix='/admin')
     app.errorhandler(404)(not_found)
+    app.template_filter()(sort)
     app.template_filter()(count)
     app.template_filter()(format_time)
 
