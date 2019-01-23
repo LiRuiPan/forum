@@ -22,4 +22,4 @@
 
 **4 部署架构图**
 
-![架构图](images/struct.png)
+![架构图](static/struct.png)
