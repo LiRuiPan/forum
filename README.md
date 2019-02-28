@@ -1,7 +1,7 @@
 # Forum
 **1 简介**
 
-一个可实用的论坛项目,基于flask框架、jinja模板、sqlalchemy ORM框架、MySQL和redis数据库。
+一个实用的论坛项目,基于Flask框架、Jinja模板、Sqlalchemy ORM框架、MySQL和Redis数据库。
 
 
 **2 功能实现**
@@ -19,6 +19,8 @@
 **3 效果**
 
 见该网站 https://www.liruipan.com
+
+![效果图](static/view.gif)
 
 **4 部署架构图**
 
